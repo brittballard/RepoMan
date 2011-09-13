@@ -5,19 +5,19 @@ using System.Text;
 
 namespace RepoMan
 {
-    public class LiveRepository<TContext, TRepository> : IRepository<TContext, TRepository> where TContext : new()
+    public class LiveRepository<TContext> : IRepository<TContext> where TContext : new()
     {
-        public IQueryable<TRepository> Where(Func<TRepository, bool> query)
+        public IQueryable<TRepository> Where<TRepository>(Func<TRepository, bool> query)
         {
             throw new NotImplementedException();
         }
 
-        public void Save(TRepository entity)
+        public void Save<TRepository>(TRepository entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(TRepository entity)
+        public void Delete<TRepository>(TRepository entity)
         {
             throw new NotImplementedException();
         }

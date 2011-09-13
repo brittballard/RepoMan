@@ -2,10 +2,10 @@
 using System;
 namespace RepoMan
 {
-    public interface IRepository<TContext, TRepository> where TContext : new()
+    public interface IRepository<TContext> where TContext : new()
     {
-        IQueryable<TRepository> Where(Func<TRepository,bool> query);
-        void Save(TRepository entity);
-        void Delete(TRepository entity);
+        IQueryable<TRepository> Where<TRepository>(Func<TRepository, bool> query);
+        void Save<TRepository>(TRepository entity);
+        void Delete<TRepository>(TRepository entity);
     }
 }
