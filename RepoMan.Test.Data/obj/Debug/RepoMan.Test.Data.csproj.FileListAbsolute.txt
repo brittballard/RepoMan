@@ -1,0 +1,8 @@
+C:\source\RepoMan\RepoMan.Test.Data\bin\Debug\RepoMan.Test.Data.dll.config
+C:\source\RepoMan\RepoMan.Test.Data\bin\Debug\RepoMan.Test.Data.dll
+C:\source\RepoMan\RepoMan.Test.Data\bin\Debug\RepoMan.Test.Data.pdb
+C:\source\RepoMan\RepoMan.Test.Data\bin\Debug\EntityFramework.dll
+C:\source\RepoMan\RepoMan.Test.Data\bin\Debug\EntityFramework.xml
+C:\source\RepoMan\RepoMan.Test.Data\obj\Debug\ResolveAssemblyReference.cache
+C:\source\RepoMan\RepoMan.Test.Data\obj\Debug\RepoMan.Test.Data.dll
+C:\source\RepoMan\RepoMan.Test.Data\obj\Debug\RepoMan.Test.Data.pdb

@@ -1,10 +1,12 @@
 C:\source\RepoMan\RepoMan.Test\bin\Debug\RepoMan.Test.dll
 C:\source\RepoMan\RepoMan.Test\bin\Debug\RepoMan.Test.pdb
-C:\source\RepoMan\RepoMan.Test\bin\Debug\nunit.framework.dll
-C:\source\RepoMan\RepoMan.Test\bin\Debug\nunit.mocks.dll
-C:\source\RepoMan\RepoMan.Test\bin\Debug\pnunit.framework.dll
 C:\source\RepoMan\RepoMan.Test\bin\Debug\Rhino.Mocks.dll
-C:\source\RepoMan\RepoMan.Test\bin\Debug\nunit.framework.xml
 C:\source\RepoMan\RepoMan.Test\obj\Debug\ResolveAssemblyReference.cache
 C:\source\RepoMan\RepoMan.Test\obj\Debug\RepoMan.Test.dll
 C:\source\RepoMan\RepoMan.Test\obj\Debug\RepoMan.Test.pdb
+C:\source\RepoMan\RepoMan.Test\bin\Debug\RepoMan.dll
+C:\source\RepoMan\RepoMan.Test\bin\Debug\RepoMan.Test.Data.dll
+C:\source\RepoMan\RepoMan.Test\bin\Debug\xunit.dll
+C:\source\RepoMan\RepoMan.Test\bin\Debug\RepoMan.Test.Data.pdb
+C:\source\RepoMan\RepoMan.Test\bin\Debug\RepoMan.pdb
+C:\source\RepoMan\RepoMan.Test\bin\Debug\xunit.xml

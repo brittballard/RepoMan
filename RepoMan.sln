@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoMan.Test", "RepoMan.Test\RepoMan.Test.csproj", "{9379CC48-FAE6-46FB-BEA4-F5009E35945A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoMan.Test.Data", "RepoMan.Test.Data\RepoMan.Test.Data.csproj", "{498BF075-657D-4B8E-93A8-4EEDF3E962B6}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = RepoMan.vsmdi
@@ -29,6 +31,10 @@ Global
 		{9379CC48-FAE6-46FB-BEA4-F5009E35945A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9379CC48-FAE6-46FB-BEA4-F5009E35945A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9379CC48-FAE6-46FB-BEA4-F5009E35945A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{498BF075-657D-4B8E-93A8-4EEDF3E962B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{498BF075-657D-4B8E-93A8-4EEDF3E962B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{498BF075-657D-4B8E-93A8-4EEDF3E962B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{498BF075-657D-4B8E-93A8-4EEDF3E962B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
