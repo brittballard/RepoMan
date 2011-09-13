@@ -114,10 +114,12 @@ namespace RepoMan.Test.Data
         /// Create a new Person object.
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
-        public static Person CreatePerson(global::System.Int64 id)
+        /// <param name="firstName">Initial value of the FirstName property.</param>
+        public static Person CreatePerson(global::System.Int64 id, global::System.String firstName)
         {
             Person person = new Person();
             person.Id = id;
+            person.FirstName = firstName;
             return person;
         }
 
@@ -154,7 +156,7 @@ namespace RepoMan.Test.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String FirstName
         {
@@ -166,7 +168,7 @@ namespace RepoMan.Test.Data
             {
                 OnFirstNameChanging(value);
                 ReportPropertyChanging("FirstName");
-                _FirstName = StructuralObject.SetValidValue(value, true);
+                _FirstName = StructuralObject.SetValidValue(value, false);
                 ReportPropertyChanged("FirstName");
                 OnFirstNameChanged();
             }
