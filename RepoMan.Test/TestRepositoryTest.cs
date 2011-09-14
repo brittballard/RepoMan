@@ -42,5 +42,18 @@ namespace RepoMan.Test
             Assert.Equal(1, people.Count());
             Assert.Equal("Cassie", people.First().FirstName);
         }
+
+        [Fact]
+        public void delete_should_remove_the_object_provided_as_an_argument()
+        {
+            var personToDelete = new Person() { FirstName = "Britton" };
+            _subject.Save(personToDelete);
+            _subject.Save(new Person() { FirstName = "Cassie" });
+            _subject.Delete(personToDelete);
+            var people = _subject.Where<Person>(person => true);
+
+            Assert.Equal(1, people.Count());
+            Assert.Equal("Cassie", people.First().FirstName);
+        }
     }
 }

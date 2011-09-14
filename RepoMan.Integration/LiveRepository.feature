@@ -1,11 +1,12 @@
-﻿Feature: Addition
-	In order to avoid silly mistakes
-	As a math idiot
-	I want to be told the sum of two numbers
+﻿Feature: LiveRepository
+	In order to write good integration tests
+	As a TDD fanatic software developer
+	I need to be able to interact with a real database
 
-@mytag
-Scenario: Add two numbers
-	Given I have entered 50 into the calculator
-	And I have entered 70 into the calculator
-	When I press add
-	Then the result should be 120 on the screen
+Scenario: Query an entity from the repository
+	Given I have a Person entity in my database like:
+	| FirstName |
+	| Britton   |
+	When I query the Person repository
+	Then I should find 1 Person
+	And the Person's name should be Britton

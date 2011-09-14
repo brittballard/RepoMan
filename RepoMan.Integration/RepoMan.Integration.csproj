@@ -33,6 +33,11 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <Private>True</Private>
+      <HintPath>..\packages\System.Data.SQLite.1.0.66.1\lib\System.Data.SQLite.DLL</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,6 +58,7 @@
     </Compile>
     <Compile Include="LiveRepository.Steps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepoMan.Events.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -61,6 +67,16 @@
       <LastGenOutput>LiveRepository.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RepoMan.Test.Data\RepoMan.Test.Data.csproj">
+      <Project>{498BF075-657D-4B8E-93A8-4EEDF3E962B6}</Project>
+      <Name>RepoMan.Test.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RepoMan\RepoMan.csproj">
+      <Project>{3D8346E7-D715-4801-B50A-2329CF96D548}</Project>
+      <Name>RepoMan</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
