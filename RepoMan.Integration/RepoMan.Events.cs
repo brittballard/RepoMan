@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TechTalk.SpecFlow;
+using System.Data.SQLite;
 
 namespace RepoMan.Integration
 {
@@ -59,7 +60,12 @@ namespace RepoMan.Integration
         [BeforeFeature]
         public static void BeforeFeature()
         {
-            //TODO: implement logic that has to run before executing each feature
+            var cnn = new SQLiteConnection("Data Source=C:\\source\\RepoMan\\database\\RepoTestDatabase.s3db");
+            cnn.Open();
+            var mycommand = new SQLiteCommand(cnn);
+            mycommand.CommandText = "DELETE FROM Person";
+            mycommand.ExecuteNonQuery();
+            cnn.Close();
         }
 
         [AfterFeature]
