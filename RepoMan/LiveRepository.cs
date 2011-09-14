@@ -33,7 +33,9 @@ namespace RepoMan
 
         public void Delete<TRepository>(TRepository entity) where TRepository : EntityObject
         {
-            throw new NotImplementedException();
+            ((ObjectSet<TRepository>)_repositories[typeof(TRepository)]).DeleteObject(entity);
+
+            _context.SaveChanges();
         }
     }
 }

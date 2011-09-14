@@ -48,7 +48,12 @@ namespace RepoMan.Integration
         [BeforeScenario]
         public void BeforeScenario()
         {
-            //TODO: implement logic that has to run before executing each scenario
+            var cnn = new SQLiteConnection("Data Source=C:\\source\\RepoMan\\database\\RepoTestDatabase.s3db");
+            cnn.Open();
+            var mycommand = new SQLiteCommand(cnn);
+            mycommand.CommandText = "DELETE FROM Person";
+            mycommand.ExecuteNonQuery();
+            cnn.Close();
         }
 
         [AfterScenario]
@@ -60,12 +65,7 @@ namespace RepoMan.Integration
         [BeforeFeature]
         public static void BeforeFeature()
         {
-            var cnn = new SQLiteConnection("Data Source=C:\\source\\RepoMan\\database\\RepoTestDatabase.s3db");
-            cnn.Open();
-            var mycommand = new SQLiteCommand(cnn);
-            mycommand.CommandText = "DELETE FROM Person";
-            mycommand.ExecuteNonQuery();
-            cnn.Close();
+
         }
 
         [AfterFeature]

@@ -23,22 +23,28 @@ namespace RepoMan.Integration
             }
         }
 
-        [Then(@"I should find 1 Person")]
-        public void ThenIShouldFind1Person()
+        [Then(@"I should find (\d+) (Person|People)")]
+        public void ThenIShouldFind1Person(int numberOfPeople, string personOrPeople)
         {
-            Assert.Equal(1, _people.Count());
+            Assert.Equal(numberOfPeople, _people.Count());
         }
 
-        [Then(@"the Person's name should be Britton")]
-        public void ThenThePersonSNameShouldBeBritton()
+        [Then(@"the Person's name should be (\w+)")]
+        public void ThenThePersonSNameShouldBeBritton(string nameOfPerson)
         {
-            Assert.Equal("Britton", _people.First().FirstName);
+            Assert.Equal(nameOfPerson, _people.First().FirstName);
         }
 
         [When(@"I query the Person repository")]
         public void WhenIQueryThePersonRepository()
         {
             _people = _subject.Where<Person>(person => true);
+        }
+
+        [When(@"I delete the Person from the repository")]
+        public void WhenIDeleteThePersonFromTheRepository()
+        {
+            _subject.Delete(_subject.Where<Person>(person => true).First());
         }
     }
 }
