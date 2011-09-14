@@ -33,6 +33,16 @@ namespace RepoMan.Test
         }
 
         [Fact]
+        public void save_should_add_a_TRepository_to_the_list_correct_repository_even_when_there_is_already_a_repository_for_the_given_type()
+        {
+            _subject.Save(new Person() { FirstName = "Britton" });
+            _subject.Save(new Person() { FirstName = "Cassie" });
+            var people = _subject.Where<Person>(person => true);
+
+            Assert.Equal(2, people.Count());
+        }
+
+        [Fact]
         public void where_should_return_an_iqueryable_list_of_TRepository_but_only_those_that_match_the_query_provided()
         {
             _subject.Save(new Person() { FirstName = "Britton" });
