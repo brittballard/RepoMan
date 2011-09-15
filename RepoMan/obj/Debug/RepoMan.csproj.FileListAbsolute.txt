@@ -1,5 +1,0 @@
-C:\source\RepoMan\RepoMan\obj\Debug\ResolveAssemblyReference.cache
-C:\source\RepoMan\RepoMan\bin\Debug\RepoMan.dll
-C:\source\RepoMan\RepoMan\bin\Debug\RepoMan.pdb
-C:\source\RepoMan\RepoMan\obj\Debug\RepoMan.dll
-C:\source\RepoMan\RepoMan\obj\Debug\RepoMan.pdb
