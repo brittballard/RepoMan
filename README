@@ -1,0 +1,5 @@
+RepoMan is a light weight repository for MS Entity Framework.
+
+Examples of RepoMan in test mode action can be found in the TestRepository class.
+
+Examples of RepoMan in the wild can be found in the LiveTestRepository.feature file. This is also a nice example of SpecFlow.
