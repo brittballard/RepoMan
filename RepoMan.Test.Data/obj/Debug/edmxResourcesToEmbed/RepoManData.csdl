@@ -2,6 +2,11 @@
 <Schema Namespace="RepoTestDatabaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
   <EntityContainer Name="RepoTestDatabaseEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="People" EntityType="RepoTestDatabaseModel.Person" />
+    <EntitySet Name="Pets" EntityType="RepoTestDatabaseModel.Pet" />
+    <AssociationSet Name="PersonPet" Association="RepoTestDatabaseModel.PersonPet">
+      <End Role="Person" EntitySet="People" />
+      <End Role="Pet" EntitySet="Pets" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Person">
     <Key>
@@ -9,5 +14,27 @@
     </Key>
     <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Pets" Relationship="RepoTestDatabaseModel.PersonPet" FromRole="Person" ToRole="Pet" />
   </EntityType>
+  <EntityType Name="Pet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int64" Name="PersonId" Nullable="false" />
+    <NavigationProperty Name="Person" Relationship="RepoTestDatabaseModel.PersonPet" FromRole="Pet" ToRole="Person" />
+  </EntityType>
+  <Association Name="PersonPet">
+    <End Type="RepoTestDatabaseModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="RepoTestDatabaseModel.Pet" Role="Pet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Pet">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

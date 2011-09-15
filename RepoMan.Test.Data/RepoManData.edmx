@@ -4,9 +4,10 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="RepoTestDatabaseModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="RepoTestDatabaseModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="RepoTestDatabaseModelStoreContainer">
           <EntitySet Name="Person" EntityType="RepoTestDatabaseModel.Store.Person" store:Type="Tables" />
+          <EntitySet Name="Pets" EntityType="RepoTestDatabaseModel.Store.Pets" store:Type="Tables" />
         </EntityContainer>
         <EntityType Name="Person">
           <Key>
@@ -15,13 +16,25 @@
           <Property Name="Id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="50" />
         </EntityType>
-      </Schema>
-    </edmx:StorageModels>
+        <EntityType Name="Pets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="PersonId" Type="integer" Nullable="false" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RepoTestDatabaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="RepoTestDatabaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="People" EntityType="RepoTestDatabaseModel.Person" />
+          <EntitySet Name="Pets" EntityType="RepoTestDatabaseModel.Pet" />
+          <AssociationSet Name="PersonPet" Association="RepoTestDatabaseModel.PersonPet">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Pet" EntitySet="Pets" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Person">
           <Key>
@@ -29,7 +42,29 @@
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Pets" Relationship="RepoTestDatabaseModel.PersonPet" FromRole="Person" ToRole="Pet" />
         </EntityType>
+        <EntityType Name="Pet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="PersonId" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="RepoTestDatabaseModel.PersonPet" FromRole="Pet" ToRole="Person" />
+        </EntityType>
+        <Association Name="PersonPet">
+          <End Type="RepoTestDatabaseModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="RepoTestDatabaseModel.Pet" Role="Pet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pet">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -40,6 +75,15 @@
             <ScalarProperty Name="Id" ColumnName="Id" />
             <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Pets">
+            <EntityTypeMapping TypeName="RepoTestDatabaseModel.Pet">
+              <MappingFragment StoreEntitySet="Pets">
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -62,6 +106,11 @@
     <Diagrams>
       <Diagram Name="RepoManData">
         <EntityTypeShape EntityType="RepoTestDatabaseModel.Person" Width="1.5" PointX="0.75" PointY="0.75" Height="1.4033821614583331" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepoTestDatabaseModel.Pet" Width="1.5" PointX="3.375" PointY="0.75" Height="1.787985026041667" />
+        <AssociationConnector Association="RepoTestDatabaseModel.PersonPet">
+          <ConnectorPoint PointX="2.25" PointY="1.547841796875" />
+          <ConnectorPoint PointX="3.375" PointY="1.547841796875" />
+        </AssociationConnector>
       </Diagram>
     </Diagrams>
   </Designer>

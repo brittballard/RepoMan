@@ -16,6 +16,11 @@ using System.Xml.Serialization;
 using System.Runtime.Serialization;
 
 [assembly: EdmSchemaAttribute()]
+#region EDM Relationship Metadata
+
+[assembly: EdmRelationshipAttribute("RepoTestDatabaseModel", "PersonPet", "Person", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RepoMan.Test.Data.Person), "Pet", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RepoMan.Test.Data.Pet), true)]
+
+#endregion
 
 namespace RepoMan.Test.Data
 {
@@ -80,6 +85,22 @@ namespace RepoMan.Test.Data
             }
         }
         private ObjectSet<Person> _People;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Pet> Pets
+        {
+            get
+            {
+                if ((_Pets == null))
+                {
+                    _Pets = base.CreateObjectSet<Pet>("Pets");
+                }
+                return _Pets;
+            }
+        }
+        private ObjectSet<Pet> _Pets;
 
         #endregion
         #region AddTo Methods
@@ -90,6 +111,14 @@ namespace RepoMan.Test.Data
         public void AddToPeople(Person person)
         {
             base.AddObject("People", person);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Pets EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPets(Pet pet)
+        {
+            base.AddObject("Pets", pet);
         }
 
         #endregion
@@ -179,6 +208,179 @@ namespace RepoMan.Test.Data
 
         #endregion
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RepoTestDatabaseModel", "PersonPet", "Pet")]
+        public EntityCollection<Pet> Pets
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Pet>("RepoTestDatabaseModel.PersonPet", "Pet");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Pet>("RepoTestDatabaseModel.PersonPet", "Pet", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RepoTestDatabaseModel", Name="Pet")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Pet : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Pet object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="firstName">Initial value of the FirstName property.</param>
+        /// <param name="personId">Initial value of the PersonId property.</param>
+        public static Pet CreatePet(global::System.Int64 id, global::System.String firstName, global::System.Int64 personId)
+        {
+            Pet pet = new Pet();
+            pet.Id = id;
+            pet.FirstName = firstName;
+            pet.PersonId = personId;
+            return pet;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FirstName
+        {
+            get
+            {
+                return _FirstName;
+            }
+            set
+            {
+                OnFirstNameChanging(value);
+                ReportPropertyChanging("FirstName");
+                _FirstName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("FirstName");
+                OnFirstNameChanged();
+            }
+        }
+        private global::System.String _FirstName;
+        partial void OnFirstNameChanging(global::System.String value);
+        partial void OnFirstNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 PersonId
+        {
+            get
+            {
+                return _PersonId;
+            }
+            set
+            {
+                OnPersonIdChanging(value);
+                ReportPropertyChanging("PersonId");
+                _PersonId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PersonId");
+                OnPersonIdChanged();
+            }
+        }
+        private global::System.Int64 _PersonId;
+        partial void OnPersonIdChanging(global::System.Int64 value);
+        partial void OnPersonIdChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RepoTestDatabaseModel", "PersonPet", "Person")]
+        public Person Person
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Person>("RepoTestDatabaseModel.PersonPet", "Person").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Person>("RepoTestDatabaseModel.PersonPet", "Person").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Person> PersonReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Person>("RepoTestDatabaseModel.PersonPet", "Person");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Person>("RepoTestDatabaseModel.PersonPet", "Person", value);
+                }
+            }
+        }
+
+        #endregion
     }
 
     #endregion
