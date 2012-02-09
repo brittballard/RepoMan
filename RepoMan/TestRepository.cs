@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.Objects.DataClasses;
+using System.Data.SqlClient;
+using System.Linq.Expressions;
 
 namespace RepoMan
 {
@@ -10,9 +12,9 @@ namespace RepoMan
     {
         private Dictionary<Type, List<object>> _repositories = new Dictionary<Type, List<object>>();
 
-        public IQueryable<TRepository> Where<TRepository>(Func<TRepository, bool> query) where TRepository : EntityObject
+        public IQueryable<TRepository> Where<TRepository>(Expression<Func<TRepository, bool>> query) where TRepository : EntityObject
         {
-            return _repositories[typeof(TRepository)].Cast<TRepository>().Where(query).AsQueryable();
+            return _repositories[typeof(TRepository)].Cast<TRepository>().Where(query.Compile()).AsQueryable();
         }
 
         public void Save<TRepository>(TRepository entity) where TRepository : EntityObject
@@ -33,6 +35,12 @@ namespace RepoMan
         {
             if (!_repositories.ContainsKey(typeof(TRepository)))
                 _repositories.Add(typeof(TRepository), new List<object>());
+        }
+
+
+        public T ExecuteRawSql<T>(Func<SqlConnection, T> sqlFunction)
+        {
+            return sqlFunction(new SqlConnection());
         }
     }
 }
