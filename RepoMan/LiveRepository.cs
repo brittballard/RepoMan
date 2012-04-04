@@ -59,7 +59,10 @@ namespace RepoMan
         public T ExecuteRawSql<T>(Func<SqlConnection, T> sqlFunction)
         {
             var sqlConnection = (SqlConnection)((EntityConnection)_context.Connection).StoreConnection;
-            sqlConnection.Open();
+            
+            if (sqlConnection.State != System.Data.ConnectionState.Open)
+                sqlConnection.Open();
+            
             return sqlFunction(sqlConnection);
         }
     }
