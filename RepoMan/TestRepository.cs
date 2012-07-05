@@ -10,11 +10,27 @@ namespace RepoMan
 {
     public class TestRepository<TContext> : IRepository<TContext> where TContext : new()
     {
-        private Dictionary<Type, List<object>> _repositories = new Dictionary<Type, List<object>>();
+        private readonly Dictionary<Type, List<object>> _repositories = new Dictionary<Type, List<object>>();
+
+        public TRepository FirstOrDefault<TRepository>(Expression<Func<TRepository, bool>> query) where TRepository : EntityObject
+        {
+            return Where(query).FirstOrDefault();
+        }
+
+        public TRepository FirstOrDefault<TRepository>(Expression<Func<TRepository, bool>> query, Expression<Func<TRepository, dynamic>> columns) where TRepository : EntityObject
+        {
+            return Where(query, columns).FirstOrDefault();
+        }
 
         public IQueryable<TRepository> Where<TRepository>(Expression<Func<TRepository, bool>> query) where TRepository : EntityObject
         {
             return _repositories[typeof(TRepository)].Cast<TRepository>().Where(query.Compile()).AsQueryable();
+        }
+
+        public IQueryable<TRepository> Where<TRepository>(Expression<Func<TRepository, bool>> query, Expression<Func<TRepository, dynamic>> columns) where TRepository : EntityObject
+        {
+            IQueryable<dynamic> dynamics = _repositories[typeof(TRepository)].Cast<TRepository>().Where(query.Compile()).AsQueryable().Select(columns);
+            return DynamicToStatic.ToStatic<TRepository>(dynamics);
         }
 
         public void Save<TRepository>(TRepository entity) where TRepository : EntityObject

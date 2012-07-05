@@ -12,8 +12,18 @@ namespace RepoMan
 {
     public class LiveRepository<TContext> : IRepository<TContext> where TContext : ObjectContext, new()
     {
-        ObjectContext _context = new TContext() as ObjectContext;
-        Dictionary<Type, object> _repositories = new Dictionary<Type, object>();
+        private readonly ObjectContext _context = new TContext() as ObjectContext;
+        private readonly Dictionary<Type, object> _repositories = new Dictionary<Type, object>();
+
+        public TRepository FirstOrDefault<TRepository>(Expression<Func<TRepository, bool>> query) where TRepository : EntityObject
+        {
+            return Where(query).FirstOrDefault();
+        }
+
+        public TRepository FirstOrDefault<TRepository>(Expression<Func<TRepository, bool>> query, Expression<Func<TRepository, dynamic>> columns) where TRepository : EntityObject
+        {
+            return Where(query, columns).FirstOrDefault();
+        }
 
         public IQueryable<TRepository> Where<TRepository>(Expression<Func<TRepository, bool>> query) where TRepository : EntityObject
         {
@@ -25,6 +35,21 @@ namespace RepoMan
                 _repositories.Add(typeof(TRepository), objectSet);
                 return ((ObjectSet<TRepository>)_repositories[typeof(TRepository)]).Where(query);
             }
+        }
+
+        public IQueryable<TRepository> Where<TRepository>(Expression<Func<TRepository, bool>> query, Expression<Func<TRepository, dynamic>> columns) where TRepository : EntityObject
+        {
+            IQueryable<dynamic> dynamics;
+            if (_repositories.ContainsKey(typeof(TRepository)))
+                dynamics = ((ObjectSet<TRepository>)_repositories[typeof(TRepository)]).Where(query).Select(columns);
+            else
+            {
+                var objectSet = _context.CreateObjectSet<TRepository>();
+                _repositories.Add(typeof(TRepository), objectSet);
+                dynamics = ((ObjectSet<TRepository>)_repositories[typeof(TRepository)]).Where(query).Select(columns);
+            }
+
+            return DynamicToStatic.ToStatic<TRepository>(dynamics);
         }
 
         public void Save<TRepository>(TRepository entity) where TRepository : EntityObject
