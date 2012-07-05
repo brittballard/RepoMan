@@ -1,0 +1,15 @@
+# Specific Files
+Thumbs.db
+StyleCop.Cache
+
+# Extensions
+*.suo
+*.user
+*.vspscc
+*.vssscc
+
+# Directories
+[Oo]bj/
+[Bb]in/
+_ReSharper.*
+TestResults/
