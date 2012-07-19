@@ -24,13 +24,27 @@ namespace RepoMan
 
         public IQueryable<TRepository> Where<TRepository>(Expression<Func<TRepository, bool>> query) where TRepository : EntityObject
         {
-            return _repositories[typeof(TRepository)].Cast<TRepository>().Where(query.Compile()).AsQueryable();
+            try
+            {
+                return _repositories[typeof(TRepository)].Cast<TRepository>().Where(query.Compile()).AsQueryable();
+            }
+            catch (Exception)
+            {
+                return new List<TRepository>().AsQueryable();
+            }
         }
 
         public IQueryable<TRepository> Where<TRepository>(Expression<Func<TRepository, bool>> query, Expression<Func<TRepository, dynamic>> columns) where TRepository : EntityObject
         {
-            IQueryable<dynamic> dynamics = _repositories[typeof(TRepository)].Cast<TRepository>().Where(query.Compile()).AsQueryable().Select(columns);
-            return DynamicToStatic.ToStatic<TRepository>(dynamics);
+            try
+            {
+                IQueryable<dynamic> dynamics = _repositories[typeof(TRepository)].Cast<TRepository>().Where(query.Compile()).AsQueryable().Select(columns);
+                return DynamicToStatic.ToStatic<TRepository>(dynamics);
+            }
+            catch (Exception)
+            {
+                return new List<TRepository>().AsQueryable();
+            }
         }
 
         public void Save<TRepository>(TRepository entity) where TRepository : EntityObject
