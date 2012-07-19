@@ -23,7 +23,11 @@ namespace RepoMan
                 var propertyInfoSource = source.GetType().GetProperty(property);
                 var propertyInfoTarget = target.GetType().GetProperty(property);
                 if (propertyInfoTarget != null)
-                    propertyInfoTarget.SetValue(target, propertyInfoSource.GetValue(source, null), null);
+                {
+                    object value = propertyInfoSource.GetValue(source, null);
+                    if(value != null)
+                        propertyInfoTarget.SetValue(target, value, null);
+                }
             }
             return target;
         }
