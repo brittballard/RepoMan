@@ -16,7 +16,7 @@ namespace RepoMan
         private readonly Dictionary<Type, object> _repositories = new Dictionary<Type, object>();
         private readonly MergeOption _mergeOption;
 
-        public LiveRepository() : this(MergeOption.AppendOnly)
+        public LiveRepository()
         {}
 
         public LiveRepository(MergeOption mergeOption)
@@ -98,7 +98,8 @@ namespace RepoMan
         private ObjectSet<TRepository> AddObjectSet<TRepository>() where TRepository : EntityObject
         {
             ObjectSet<TRepository> objectSet = _context.CreateObjectSet<TRepository>();
-            objectSet.MergeOption = _mergeOption;
+            if(_mergeOption != null)
+                objectSet.MergeOption = _mergeOption;
             _repositories.Add(typeof(TRepository), objectSet);
             return objectSet;
         }
