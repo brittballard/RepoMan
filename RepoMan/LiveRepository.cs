@@ -14,6 +14,15 @@ namespace RepoMan
     {
         private readonly ObjectContext _context = new TContext() as ObjectContext;
         private readonly Dictionary<Type, object> _repositories = new Dictionary<Type, object>();
+        private readonly MergeOption _mergeOption;
+
+        public LiveRepository() : this(MergeOption.AppendOnly)
+        {}
+
+        public LiveRepository(MergeOption mergeOption)
+        {
+            _mergeOption = mergeOption;
+        }
 
         public TRepository FirstOrDefault<TRepository>(Expression<Func<TRepository, bool>> query) where TRepository : EntityObject
         {
@@ -31,8 +40,7 @@ namespace RepoMan
                 return ((ObjectSet<TRepository>)_repositories[typeof(TRepository)]).Where(query);
             else
             {
-                var objectSet = _context.CreateObjectSet<TRepository>();
-                _repositories.Add(typeof(TRepository), objectSet);
+                AddObjectSet<TRepository>();
                 return ((ObjectSet<TRepository>)_repositories[typeof(TRepository)]).Where(query);
             }
         }
@@ -44,8 +52,7 @@ namespace RepoMan
                 dynamics = ((ObjectSet<TRepository>)_repositories[typeof(TRepository)]).Where(query).Select(columns);
             else
             {
-                var objectSet = _context.CreateObjectSet<TRepository>();
-                _repositories.Add(typeof(TRepository), objectSet);
+                AddObjectSet<TRepository>();
                 dynamics = ((ObjectSet<TRepository>)_repositories[typeof(TRepository)]).Where(query).Select(columns);
             }
 
@@ -62,10 +69,7 @@ namespace RepoMan
                 }
                 else
                 {
-                    var objectSet = _context.CreateObjectSet<TRepository>();
-                    _repositories.Add(typeof(TRepository), objectSet);
-
-
+                    var objectSet = AddObjectSet<TRepository>();
                     objectSet.AddObject(entity);
                 }
             }
@@ -89,6 +93,14 @@ namespace RepoMan
                 sqlConnection.Open();
             
             return sqlFunction(sqlConnection);
+        }
+
+        private ObjectSet<TRepository> AddObjectSet<TRepository>() where TRepository : EntityObject
+        {
+            ObjectSet<TRepository> objectSet = _context.CreateObjectSet<TRepository>();
+            objectSet.MergeOption = _mergeOption;
+            _repositories.Add(typeof(TRepository), objectSet);
+            return objectSet;
         }
     }
 }
