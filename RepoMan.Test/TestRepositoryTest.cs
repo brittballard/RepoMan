@@ -96,5 +96,16 @@ namespace RepoMan.Test
             Assert.AreEqual(1, person.Id);
             Assert.IsNull(person.FirstName);
         }
+
+        [TestMethod]
+        public void update_should_update_existing_entity()
+        {
+            _subject.Save(new Person() { Id = 1, FirstName = "Britton" });
+            var person = _subject.FirstOrDefault<Person>(x => x.Id == 1);
+
+            _subject.Save(person);
+
+            Assert.AreEqual(1, _subject.Where<Person>(x => x.Id == 1).Count());
+        }
     }
 }
