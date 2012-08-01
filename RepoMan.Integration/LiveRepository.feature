@@ -18,3 +18,19 @@ Scenario: Delete an entity from the repository
 	When I delete the Person from the repository
 	And I query the Person repository
 	Then I should find 0 People
+
+Scenario: Query with columns should only return selected columns
+	Given I have a Person entity in my database like:
+	| Id | FirstName |
+	| 1   | Britton  |
+	| 2   | SomeDude |
+	When I query the Person repository for only Id
+	Then The results should only have Id populated
+
+Scenario: FirstOrDefault should return first match
+	Given I have a Person entity in my database like:
+	| Id | FirstName |
+	| 1   | Britton  |
+	| 2   | SomeDude |
+	When I lookup the Person repository for the name Britton
+	Then The Person's name should be Britton

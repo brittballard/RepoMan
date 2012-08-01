@@ -11,8 +11,9 @@ namespace RepoMan.Integration
     [Binding]
     public class LiveRepository
     {
-        LiveRepository<RepoTestDatabaseEntities> _subject = new LiveRepository<RepoTestDatabaseEntities>();
-        IQueryable<Person> _people;
+        private LiveRepository<RepoTestDatabaseEntities> _subject = new LiveRepository<RepoTestDatabaseEntities>();
+        private IQueryable<Person> _people;
+        private Person _person;
 
         [Given(@"I have a Person entity in my database like:")]
         public void GivenIHaveAPersonEntityInMyDatabaseLike(Table table)
@@ -35,6 +36,23 @@ namespace RepoMan.Integration
             Assert.Equal(nameOfPerson, _people.First().FirstName);
         }
 
+        [Then(@"The results should only have Id populated")]
+        public void ThenTheResultsShouldOnlyHaveIdPopulated()
+        {
+            foreach (var person in _people)
+            {
+                Assert.True(person.Id > 0);
+                Assert.Null(person.FirstName);
+            }
+        }
+
+        [Then(@"The Person's name should be (\w+)")]
+        public void ThenThePersonSNameShouldBeX(string firstName)
+        {
+            Assert.NotNull(_person);
+            Assert.Equal(firstName, _person.FirstName);
+        }
+
         [When(@"I query the Person repository")]
         public void WhenIQueryThePersonRepository()
         {
@@ -46,5 +64,18 @@ namespace RepoMan.Integration
         {
             _subject.Delete(_subject.Where<Person>(person => true).First());
         }
+
+        [When(@"I query the Person repository for only Id")]
+        public void WhenIQueryThePersonRepositoryForOnlyId()
+        {
+            _people = _subject.Where<Person>(person => true, x => new {x.Id});
+        }
+
+        [When(@"I lookup the Person repository for the name (\w+)")]
+        public void WhenILookupThePersonRepositoryForTheNameX(string firstName)
+        {
+            _person = _subject.FirstOrDefault<Person>(x => x.FirstName == firstName);
+        }
+
     }
 }

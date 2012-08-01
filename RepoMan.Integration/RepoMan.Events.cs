@@ -48,7 +48,7 @@ namespace RepoMan.Integration
         [BeforeScenario]
         public void BeforeScenario()
         {
-            var cnn = new SQLiteConnection("Data Source=C:\\source\\RepoMan\\database\\RepoTestDatabase.s3db");
+            var cnn = new SQLiteConnection(@"Data Source=C:\DEV\SRC\Impulse\Git\ImpulseRepoMan\database\RepoTestDatabase.s3db");
             cnn.Open();
             var mycommand = new SQLiteCommand(cnn);
             mycommand.CommandText = "DELETE FROM Person";

@@ -7,7 +7,7 @@ using System.Data.Entity;
 
 namespace RepoMan.Test
 {
-    class TestRepositoryTest
+    public class TestRepositoryTest
     {
         private TestRepository<RepoTestDatabaseEntities> _subject;
 
@@ -64,6 +64,36 @@ namespace RepoMan.Test
 
             Assert.Equal(1, people.Count());
             Assert.Equal("Cassie", people.First().FirstName);
+        }
+
+        [Fact]
+        public void firstordefault_should_return_first_matching_result()
+        {
+            _subject.Save(new Person() { FirstName = "Britton" });
+            _subject.Save(new Person() { FirstName = "Cassie" });
+            var person = _subject.FirstOrDefault<Person>(x => x.FirstName == "Britton");
+
+            Assert.Equal("Britton", person.FirstName);
+        }
+
+        [Fact]
+        public void firstordefault_should_return_null_if_no_match_exists()
+        {
+            _subject.Save(new Person() { FirstName = "Britton" });
+            _subject.Save(new Person() { FirstName = "Cassie" });
+            var person = _subject.FirstOrDefault<Person>(x => x.FirstName == "SomeoneElse");
+
+            Assert.Null(person);
+        }
+
+        [Fact]
+        public void where_with_columns_should_return_only_selected_columns()
+        {
+            _subject.Save(new Person() { Id = 1, FirstName = "Britton" });
+            var person = _subject.FirstOrDefault<Person>(x => x.Id == 1, x => new {x.Id});
+
+            Assert.Equal(1, person.Id);
+            Assert.Null(person.FirstName);
         }
     }
 }
