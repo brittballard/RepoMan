@@ -17,7 +17,8 @@ namespace RepoMan.Integration
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.7.1.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class LiveRepositoryFeature : Xunit.IUseFixture<LiveRepositoryFeature.FixtureData>, System.IDisposable
+    [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
+    public partial class LiveRepositoryFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -25,12 +26,8 @@ namespace RepoMan.Integration
 #line 1 "LiveRepository.feature"
 #line hidden
         
-        public LiveRepositoryFeature()
-        {
-            this.TestInitialize();
-        }
-        
-        public static void FeatureSetup()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]
+        public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "LiveRepository", "In order to write good integration tests\r\nAs a TDD fanatic software developer\r\nI " +
@@ -38,16 +35,24 @@ namespace RepoMan.Integration
             testRunner.OnFeatureStart(featureInfo);
         }
         
+        [Microsoft.VisualStudio.TestTools.UnitTesting.ClassCleanupAttribute()]
         public static void FeatureTearDown()
         {
             testRunner.OnFeatureEnd();
             testRunner = null;
         }
         
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute()]
         public virtual void TestInitialize()
         {
+            if (((TechTalk.SpecFlow.FeatureContext.Current != null) 
+                        && (TechTalk.SpecFlow.FeatureContext.Current.FeatureInfo.Title != "LiveRepository")))
+            {
+                RepoMan.Integration.LiveRepositoryFeature.FeatureSetup(null);
+            }
         }
         
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCleanupAttribute()]
         public virtual void ScenarioTearDown()
         {
             testRunner.OnScenarioEnd();
@@ -63,18 +68,9 @@ namespace RepoMan.Integration
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void SetFixture(LiveRepositoryFeature.FixtureData fixtureData)
-        {
-        }
-        
-        void System.IDisposable.Dispose()
-        {
-            this.ScenarioTearDown();
-        }
-        
-        [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "LiveRepository")]
-        [Xunit.TraitAttribute("Description", "Query an entity from the repository")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Query an entity from the repository")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "LiveRepository")]
         public virtual void QueryAnEntityFromTheRepository()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Query an entity from the repository", ((string[])(null)));
@@ -97,9 +93,9 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "LiveRepository")]
-        [Xunit.TraitAttribute("Description", "Delete an entity from the repository")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Delete an entity from the repository")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "LiveRepository")]
         public virtual void DeleteAnEntityFromTheRepository()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Delete an entity from the repository", ((string[])(null)));
@@ -122,9 +118,9 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "LiveRepository")]
-        [Xunit.TraitAttribute("Description", "Query with columns should only return selected columns")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Query with columns should only return selected columns")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "LiveRepository")]
         public virtual void QueryWithColumnsShouldOnlyReturnSelectedColumns()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Query with columns should only return selected columns", ((string[])(null)));
@@ -150,9 +146,9 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "LiveRepository")]
-        [Xunit.TraitAttribute("Description", "FirstOrDefault should return first match")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("FirstOrDefault should return first match")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "LiveRepository")]
         public virtual void FirstOrDefaultShouldReturnFirstMatch()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("FirstOrDefault should return first match", ((string[])(null)));
@@ -176,22 +172,6 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.Then("The Person\'s name should be Britton");
 #line hidden
             this.ScenarioCleanup();
-        }
-        
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.7.1.0")]
-        [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-        public class FixtureData : System.IDisposable
-        {
-            
-            public FixtureData()
-            {
-                LiveRepositoryFeature.FeatureSetup();
-            }
-            
-            void System.IDisposable.Dispose()
-            {
-                LiveRepositoryFeature.FeatureTearDown();
-            }
         }
     }
 }

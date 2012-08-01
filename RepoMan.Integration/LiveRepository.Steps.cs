@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 using RepoMan.Test.Data;
-using Xunit;
 
 namespace RepoMan.Integration
 {
@@ -27,13 +27,13 @@ namespace RepoMan.Integration
         [Then(@"I should find (\d+) (Person|People)")]
         public void ThenIShouldFind1Person(int numberOfPeople, string personOrPeople)
         {
-            Assert.Equal(numberOfPeople, _people.Count());
+            Assert.AreEqual(numberOfPeople, _people.Count());
         }
 
         [Then(@"the Person's name should be (\w+)")]
         public void ThenThePersonSNameShouldBeBritton(string nameOfPerson)
         {
-            Assert.Equal(nameOfPerson, _people.First().FirstName);
+            Assert.AreEqual(nameOfPerson, _people.First().FirstName);
         }
 
         [Then(@"The results should only have Id populated")]
@@ -41,16 +41,16 @@ namespace RepoMan.Integration
         {
             foreach (var person in _people)
             {
-                Assert.True(person.Id > 0);
-                Assert.Null(person.FirstName);
+                Assert.IsTrue(person.Id > 0);
+                Assert.IsNull(person.FirstName);
             }
         }
 
         [Then(@"The Person's name should be (\w+)")]
         public void ThenThePersonSNameShouldBeX(string firstName)
         {
-            Assert.NotNull(_person);
-            Assert.Equal(firstName, _person.FirstName);
+            Assert.IsNotNull(_person);
+            Assert.AreEqual(firstName, _person.FirstName);
         }
 
         [When(@"I query the Person repository")]
