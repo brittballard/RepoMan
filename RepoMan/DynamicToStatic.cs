@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Objects;
 using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace RepoMan
 {
@@ -35,8 +33,7 @@ namespace RepoMan
         public static IQueryable<T> ToStatic<T>(IQueryable<dynamic> dynamics)
         {
             var objects = new List<T>();
-            var list = dynamics.ToList();
-            foreach (var d in list)
+            foreach (var d in dynamics)
                 objects.Add(DynamicToStatic.ToStatic<T>(d));
             return objects.AsQueryable();
         }
@@ -63,5 +60,4 @@ namespace RepoMan
             return tList;
         } 
     }
-
 }
