@@ -50,6 +50,11 @@ namespace RepoMan
 
         public void Delete<TRepository>(TRepository entity) where TRepository : EntityObject
         {
+            if (!_repositories.ContainsKey(typeof(TRepository)))
+            {
+                AddObjectSet<TRepository>();
+            }
+            
             ((ObjectSet<TRepository>)_repositories[typeof(TRepository)]).DeleteObject(entity);
 
             _context.SaveChanges();
