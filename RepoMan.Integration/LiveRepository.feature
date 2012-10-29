@@ -1,4 +1,4 @@
-﻿Feature: LiveRepository
+Feature: LiveRepository
 	In order to write good integration tests
 	As a TDD fanatic software developer
 	I need to be able to interact with a real database
