@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>RepoMan</id>
+    <version>0.0.0</version><!-- Version set in Jenkins -->
+    <title>RepoMan</title>
+    <authors>Britt Ballard, Mike Pennington</authors>
+    <owners>Impulse DEV</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Package for encapsulating entityframework for easy unit-testing.</description>
+    <copyright>Copyright 2012</copyright>
+    <tags></tags>
+  </metadata>
+</package>

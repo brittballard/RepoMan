@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +8,7 @@ using System.Data.SQLite;
 namespace RepoMan.Integration
 {
     [Binding]
-    public class RepoMan
+    public class RepoManEvents
     {
         [BeforeStep]
         public void BeforeStep()
@@ -48,7 +48,7 @@ namespace RepoMan.Integration
         [BeforeScenario]
         public void BeforeScenario()
         {
-            var cnn = new SQLiteConnection("Data Source=C:\\source\\RepoMan\\database\\RepoTestDatabase.s3db");
+            var cnn = new SQLiteConnection(@"Data Source=..\..\..\database\RepoTestDatabase.s3db");
             cnn.Open();
             var mycommand = new SQLiteCommand(cnn);
             mycommand.CommandText = "DELETE FROM Person";
